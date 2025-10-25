@@ -20,18 +20,18 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-md border-b border-gray-200 dark:border-gray-800">
-      <nav className="container mx-auto px-4 py-4 max-w-7xl">
-        <div className="flex items-center justify-between">
+      <nav className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 max-w-7xl">
+        <div className="flex items-center justify-between gap-2">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
+          <Link to="/" className="flex items-center gap-2 group shrink-0">
             <motion.div
               whileHover={{ rotate: 360 }}
               transition={{ duration: 0.6 }}
-              className="text-3xl"
+              className="text-2xl sm:text-3xl"
             >
               🍃
             </motion.div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 dark:from-amber-400 dark:via-orange-400 dark:to-red-400 bg-clip-text text-transparent">
+            <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 dark:from-amber-400 dark:via-orange-400 dark:to-red-400 bg-clip-text text-transparent">
               Sunleaf
             </span>
           </Link>
@@ -162,23 +162,25 @@ export default function Header() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-3">
-            <LanguageSwitcher />
+          <div className="md:hidden flex items-center gap-1.5 sm:gap-2">
+            <div className="hidden xs:block">
+              <LanguageSwitcher />
+            </div>
             <ThemeToggle />
 
-            <Link to="/wishlist" className="relative">
-              <Heart className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+            <Link to="/wishlist" className="relative p-1.5 sm:p-2">
+              <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 dark:text-gray-300" />
               {wishlistItems.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-pink-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="absolute -top-0.5 -right-0.5 bg-pink-500 text-white text-xs font-bold rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center text-[10px] sm:text-xs">
                   {wishlistItems.length}
                 </span>
               )}
             </Link>
             
-            <Link to="/cart" className="relative">
-              <ShoppingCart className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+            <Link to="/cart" className="relative p-1.5 sm:p-2">
+              <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 dark:text-gray-300" />
               {cartItemsCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center text-[10px] sm:text-xs">
                   {cartItemsCount}
                 </span>
               )}
@@ -186,13 +188,13 @@ export default function Header() {
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               aria-label="Menu"
             >
               {mobileMenuOpen ? (
-                <X className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                <X className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 dark:text-gray-300" />
               ) : (
-                <Menu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                <Menu className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 dark:text-gray-300" />
               )}
             </button>
           </div>
