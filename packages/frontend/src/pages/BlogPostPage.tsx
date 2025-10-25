@@ -1,6 +1,6 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar, Clock, User, Share2, Facebook, Twitter, Link as LinkIcon } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, User, Facebook, Twitter, Link as LinkIcon } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import toast from 'react-hot-toast';
 
