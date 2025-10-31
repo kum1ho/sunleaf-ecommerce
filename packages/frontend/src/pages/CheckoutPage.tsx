@@ -78,37 +78,37 @@ export default function CheckoutPage() {
     <div className="max-w-7xl mx-auto">
       <Toaster />
       
-      <div className="mb-12">
+      <div className="mb-8 sm:mb-12">
         <motion.h1 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl sm:text-5xl font-bold mb-4 text-gray-900 dark:text-white"
+          className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 text-gray-900 dark:text-white"
         >
           Оформлення замовлення
         </motion.h1>
-        <p className="text-lg text-gray-600 dark:text-gray-400">
-          Заповніть дані для доставки вашого замовлення
+        <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400">
+          Заповніть дані для доставки
         </p>
       </div>
 
       {/* Progress Steps */}
-      <div className="mb-12">
-        <div className="flex items-center justify-between max-w-3xl mx-auto">
+      <div className="mb-8 sm:mb-12">
+        <div className="flex items-center justify-between max-w-3xl mx-auto px-2">
           {steps.map((step, idx) => (
             <div key={step.number} className="flex items-center flex-1">
               <div className="flex flex-col items-center flex-1">
                 <motion.div
                   initial={{ scale: 0.8 }}
                   animate={{ scale: currentStep >= step.number ? 1 : 0.8 }}
-                  className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mb-2 transition-all ${
+                  className={`w-10 h-10 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full flex items-center justify-center mb-1 sm:mb-2 transition-all ${
                     currentStep >= step.number
                       ? 'bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-lg'
                       : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                   }`}
                 >
-                  <step.icon className="w-6 h-6 sm:w-8 sm:h-8" />
+                  <step.icon className="w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8" />
                 </motion.div>
-                <span className={`text-xs sm:text-sm font-semibold text-center ${
+                <span className={`text-[10px] sm:text-xs lg:text-sm font-semibold text-center leading-tight ${
                   currentStep >= step.number
                     ? 'text-amber-600 dark:text-amber-400'
                     : 'text-gray-500 dark:text-gray-400'
@@ -118,7 +118,7 @@ export default function CheckoutPage() {
               </div>
               
               {idx < steps.length - 1 && (
-                <div className={`h-1 flex-1 mx-2 rounded ${
+                <div className={`h-0.5 sm:h-1 flex-1 mx-1 sm:mx-2 rounded ${
                   currentStep > step.number
                     ? 'bg-gradient-to-r from-amber-600 to-orange-600'
                     : 'bg-gray-200 dark:bg-gray-700'

@@ -27,21 +27,21 @@ export default function WishlistPage() {
 
   if (items.length === 0) {
     return (
-      <div className="text-center py-16">
+      <div className="text-center py-12 sm:py-16 px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <Heart className="w-24 h-24 mx-auto text-gray-300 dark:text-gray-600 mb-6" />
-          <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+          <Heart className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto text-gray-300 dark:text-gray-600 mb-4 sm:mb-6" />
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 text-gray-900 dark:text-white">
             Список бажань порожній
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
+          <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-400 mb-6 sm:mb-8">
             Додайте товари, які вам сподобались, натиснувши на ❤️
           </p>
-          <Link to="/catalog" className="btn btn-primary">
-            <ArrowRight className="w-5 h-5" />
-            Перейти до каталогу
+          <Link to="/catalog" className="btn btn-primary inline-flex items-center gap-2">
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span>Перейти до каталогу</span>
           </Link>
         </motion.div>
       </div>
@@ -49,14 +49,14 @@ export default function WishlistPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-2">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">
             Список бажань <span className="text-gradient">❤️</span>
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
             У вас {items.length} {items.length === 1 ? 'товар' : 'товари'} в списку бажань
           </p>
         </div>

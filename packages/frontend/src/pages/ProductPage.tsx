@@ -202,40 +202,40 @@ export default function ProductPage() {
             </h1>
           </div>
 
-          <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-lg text-[var(--text-secondary)] leading-relaxed">
             {product.description}
           </p>
 
-          <div className="flex items-baseline gap-3">
-            <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary-600 dark:text-primary-400">
+          <div className="flex flex-wrap items-baseline gap-2 sm:gap-3">
+            <span className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary-600 dark:text-primary-400">
               {product.price.toFixed(2)} ₴
             </span>
-            <span className="text-xl sm:text-2xl line-through text-gray-400">
+            <span className="text-lg sm:text-xl lg:text-2xl line-through text-gray-400">
               {(product.price * 1.2).toFixed(2)} ₴
             </span>
-            <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-sm font-bold">
+            <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-xs sm:text-sm font-bold">
               -20%
             </span>
           </div>
 
           {/* Quantity Selector */}
-          <div className="space-y-3">
-            <label className="font-semibold text-lg">Кількість:</label>
-            <div className="flex items-center gap-4">
+          <div className="space-y-2 sm:space-y-3">
+            <label className="font-semibold text-base sm:text-lg">Кількість:</label>
+            <div className="flex items-center gap-3 sm:gap-4">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="w-12 h-12 rounded-xl bg-[var(--bg-secondary)] hover:bg-primary-100 dark:hover:bg-primary-900/30 font-bold text-xl flex items-center justify-center"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[var(--bg-secondary)] hover:bg-primary-100 dark:hover:bg-primary-900/30 font-bold text-lg sm:text-xl flex items-center justify-center"
               >
                 -
               </motion.button>
-              <span className="w-16 text-center text-2xl font-bold">{quantity}</span>
+              <span className="w-12 sm:w-16 text-center text-xl sm:text-2xl font-bold">{quantity}</span>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-                className="w-12 h-12 rounded-xl bg-[var(--bg-secondary)] hover:bg-primary-100 dark:hover:bg-primary-900/30 font-bold text-xl flex items-center justify-center"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[var(--bg-secondary)] hover:bg-primary-100 dark:hover:bg-primary-900/30 font-bold text-lg sm:text-xl flex items-center justify-center"
               >
                 +
               </motion.button>
@@ -246,48 +246,49 @@ export default function ProductPage() {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-4">
+          <div className="flex gap-3 sm:gap-4">
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={handleAddToCart}
               disabled={product.stock === 0}
-              className="btn btn-primary flex-1 text-lg py-4 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn btn-primary flex-1 text-sm sm:text-base lg:text-lg py-3 sm:py-4 flex items-center justify-center gap-2 sm:gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <ShoppingCart className="w-6 h-6" />
-              {product.stock > 0 ? 'Додати в кошик' : 'Немає в наявності'}
+              <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6" />
+              <span className="hidden xs:inline">{product.stock > 0 ? 'Додати в кошик' : 'Немає в наявності'}</span>
+              <span className="xs:hidden">{product.stock > 0 ? 'В кошик' : 'Немає'}</span>
             </motion.button>
           </div>
 
           {/* Features */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary-100 dark:bg-primary-900/30 rounded-lg">
-                <Truck className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="p-1.5 sm:p-2 bg-primary-100 dark:bg-primary-900/30 rounded-lg shrink-0">
+                <Truck className="w-5 h-5 sm:w-6 sm:h-6 text-primary-600 dark:text-primary-400" />
               </div>
               <div>
-                <div className="font-semibold">Безкоштовна доставка</div>
-                <div className="text-sm text-[var(--text-secondary)]">від 500 ₴</div>
+                <div className="font-semibold text-sm sm:text-base">Безкоштовна доставка</div>
+                <div className="text-xs sm:text-sm text-[var(--text-secondary)]">від 500 ₴</div>
               </div>
             </div>
             
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary-100 dark:bg-primary-900/30 rounded-lg">
-                <Shield className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="p-1.5 sm:p-2 bg-primary-100 dark:bg-primary-900/30 rounded-lg shrink-0">
+                <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-primary-600 dark:text-primary-400" />
               </div>
               <div>
-                <div className="font-semibold">Гарантія якості</div>
-                <div className="text-sm text-[var(--text-secondary)]">100%</div>
+                <div className="font-semibold text-sm sm:text-base">Гарантія якості</div>
+                <div className="text-xs sm:text-sm text-[var(--text-secondary)]">100%</div>
               </div>
             </div>
             
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary-100 dark:bg-primary-900/30 rounded-lg">
-                <Package className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="p-1.5 sm:p-2 bg-primary-100 dark:bg-primary-900/30 rounded-lg shrink-0">
+                <Package className="w-5 h-5 sm:w-6 sm:h-6 text-primary-600 dark:text-primary-400" />
               </div>
               <div>
-                <div className="font-semibold">Повернення</div>
-                <div className="text-sm text-[var(--text-secondary)]">14 днів</div>
+                <div className="font-semibold text-sm sm:text-base">Повернення</div>
+                <div className="text-xs sm:text-sm text-[var(--text-secondary)]">14 днів</div>
               </div>
             </div>
           </div>
@@ -295,10 +296,10 @@ export default function ProductPage() {
       </div>
 
       {/* Product Details Tabs */}
-      <div className="border-t border-gray-200 dark:border-gray-700 pt-12">
-        <h2 className="text-3xl font-bold mb-6">Опис товару</h2>
+      <div className="border-t border-gray-200 dark:border-gray-700 pt-8 sm:pt-12">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Опис товару</h2>
         <div className="prose dark:prose-invert max-w-none">
-          <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-lg text-[var(--text-secondary)] leading-relaxed">
             {product.description}
           </p>
           

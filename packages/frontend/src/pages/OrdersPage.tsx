@@ -90,15 +90,15 @@ export default function OrdersPage() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div>
+      <div className="mb-6 sm:mb-8">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl sm:text-5xl font-bold mb-3 text-gray-900 dark:text-white"
+          className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2 sm:mb-3 text-gray-900 dark:text-white"
         >
           Мої замовлення
         </motion.h1>
-        <p className="text-lg text-gray-600 dark:text-gray-400">
+        <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400">
           Всього замовлень: {orders.length}
         </p>
       </div>
@@ -181,10 +181,10 @@ export default function OrdersPage() {
                   <p>{order.shippingCity}, {order.shippingAddress}</p>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex flex-col sm:flex-row items-end sm:items-center gap-3 sm:gap-4">
                   <div className="text-right">
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Всього:</p>
-                    <p className="text-3xl font-bold text-primary-600 dark:text-primary-400">
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1">Всього:</p>
+                    <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-primary-600 dark:text-primary-400">
                       {order.total.toFixed(2)} ₴
                     </p>
                   </div>
@@ -193,10 +193,10 @@ export default function OrdersPage() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setSelectedOrder(order)}
-                    className="btn btn-secondary flex items-center gap-2"
+                    className="btn btn-secondary flex items-center gap-2 text-sm sm:text-base"
                   >
                     <Eye className="w-4 h-4" />
-                    Деталі
+                    <span className="hidden xs:inline">Деталі</span>
                   </motion.button>
                 </div>
               </div>
@@ -219,7 +219,7 @@ export default function OrdersPage() {
             onClick={(e) => e.stopPropagation()}
             className="card max-w-2xl w-full max-h-[90vh] overflow-y-auto"
           >
-            <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white">
               Деталі замовлення #{selectedOrder.id.slice(0, 8)}
             </h2>
 

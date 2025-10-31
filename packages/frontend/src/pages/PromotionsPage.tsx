@@ -114,22 +114,22 @@ export default function PromotionsPage() {
     <div className="space-y-12">
       {/* Hero */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center"
+        className="text-center px-4"
       >
-        <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-red-100 dark:bg-red-900/30 rounded-full">
-          <Sparkles className="w-5 h-5 text-red-600 dark:text-red-400" />
-          <span className="text-sm font-semibold text-red-700 dark:text-red-300">
+        <div className="inline-flex items-center gap-2 mb-4 sm:mb-6 px-3 sm:px-4 py-1.5 sm:py-2 bg-red-100 dark:bg-red-900/30 rounded-full">
+          <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-red-600 dark:text-red-400" />
+          <span className="text-xs sm:text-sm font-semibold text-red-700 dark:text-red-300">
             Гарячі пропозиції
           </span>
         </div>
         
-        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white">
           Акції та <span className="text-gradient">Спецпропозиції</span>
         </h1>
         
-        <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+        <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
           Не пропустіть унікальні пропозиції! Обмежена кількість та час дії
         </p>
       </motion.div>
@@ -151,21 +151,21 @@ export default function PromotionsPage() {
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent" />
           </div>
           
-          <div className="relative p-8 md:p-12 min-h-[400px] flex flex-col justify-center">
+          <div className="relative p-4 sm:p-6 md:p-8 lg:p-12 min-h-[300px] sm:min-h-[400px] flex flex-col justify-center">
             <div className="max-w-2xl">
               {getDiscountBadge(promotions[0])}
               
-              <h2 className="text-4xl md:text-5xl font-bold text-white mt-6 mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mt-4 sm:mt-6 mb-3 sm:mb-4">
                 {promotions[0].title}
               </h2>
               
-              <p className="text-xl text-gray-200 mb-8">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-200 mb-6 sm:mb-8">
                 {promotions[0].description}
               </p>
 
               {/* Timer */}
               {timeLeft[promotions[0].id] && (
-                <div className="flex gap-4 mb-8">
+                <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 mb-6 sm:mb-8">
                   {[
                     { label: 'Днів', value: timeLeft[promotions[0].id].days },
                     { label: 'Годин', value: timeLeft[promotions[0].id].hours },
@@ -174,20 +174,20 @@ export default function PromotionsPage() {
                   ].map((unit, idx) => (
                     <div
                       key={idx}
-                      className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 min-w-[80px] text-center"
+                      className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-2 sm:p-3 md:p-4 min-w-[60px] sm:min-w-[70px] md:min-w-[80px] text-center"
                     >
-                      <div className="text-3xl font-bold text-white mb-1">
+                      <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-0.5 sm:mb-1">
                         {String(unit.value).padStart(2, '0')}
                       </div>
-                      <div className="text-xs text-gray-300 uppercase">{unit.label}</div>
+                      <div className="text-[10px] sm:text-xs text-gray-300 uppercase">{unit.label}</div>
                     </div>
                   ))}
                 </div>
               )}
 
-              <Link to="/catalog" className="btn btn-primary inline-flex">
-                <Zap className="w-5 h-5" />
-                Перейти до товару
+              <Link to="/catalog" className="btn btn-primary inline-flex items-center gap-2 text-sm sm:text-base">
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span>Перейти до товару</span>
               </Link>
             </div>
           </div>
