@@ -59,20 +59,20 @@ export default function AboutPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center"
+        className="text-center px-4"
       >
-        <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-primary-100 dark:bg-primary-900/30 rounded-full">
-          <Leaf className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-          <span className="text-sm font-semibold text-primary-700 dark:text-primary-300">
+        <div className="inline-flex items-center gap-2 mb-4 sm:mb-6 px-3 sm:px-4 py-1.5 sm:py-2 bg-primary-100 dark:bg-primary-900/30 rounded-full">
+          <Leaf className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 dark:text-primary-400" />
+          <span className="text-xs sm:text-sm font-semibold text-primary-700 dark:text-primary-300">
             Натурально • Екологічно • Свідомо
           </span>
         </div>
         
-        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white">
           Про <span className="text-gradient">Sunleaf</span>
         </h1>
         
-        <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
           Ми — команда ентузіастів, які вірять, що кожна людина заслуговує на якісні, 
           натуральні продукти без шкоди для планети. З 2022 року ми допомагаємо українцям 
           робити свідомий вибір на користь здоров'я та екології.
@@ -84,15 +84,15 @@ export default function AboutPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="grid grid-cols-2 md:grid-cols-4 gap-6"
+        className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6"
       >
         {stats.map((stat, idx) => (
           <div
             key={idx}
-            className="card text-center"
+            className="card text-center p-3 sm:p-4 md:p-6"
           >
-            <p className="text-4xl font-bold text-gradient mb-2">{stat.value}</p>
-            <p className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</p>
+            <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient mb-1 sm:mb-2">{stat.value}</p>
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{stat.label}</p>
           </div>
         ))}
       </motion.div>
@@ -104,7 +104,7 @@ export default function AboutPage() {
         transition={{ delay: 0.3 }}
         className="card"
       >
-        <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white">
           Наша історія 📖
         </h2>
         <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -126,10 +126,10 @@ export default function AboutPage() {
 
       {/* Values */}
       <div>
-        <h2 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-gray-900 dark:text-white">
           Наші цінності 🌟
         </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {values.map((value, idx) => (
             <motion.div
               key={idx}
@@ -138,13 +138,13 @@ export default function AboutPage() {
               transition={{ delay: 0.1 * idx }}
               className="card-hover text-center"
             >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-accent-500 rounded-2xl mb-4">
-                <value.icon className="w-8 h-8 text-white" />
+              <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl sm:rounded-2xl mb-3 sm:mb-4">
+                <value.icon className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+              <h3 className="text-lg sm:text-xl font-bold mb-1 sm:mb-2 text-gray-900 dark:text-white">
                 {value.title}
               </h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                 {value.description}
               </p>
             </motion.div>

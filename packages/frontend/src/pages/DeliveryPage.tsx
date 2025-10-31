@@ -8,27 +8,27 @@ export default function DeliveryPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center"
+        className="text-center px-4"
       >
-        <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-green-100 dark:bg-green-900/30 rounded-full">
-          <Truck className="w-5 h-5 text-green-600 dark:text-green-400" />
-          <span className="text-sm font-semibold text-green-700 dark:text-green-300">
+        <div className="inline-flex items-center gap-2 mb-4 sm:mb-6 px-3 sm:px-4 py-1.5 sm:py-2 bg-green-100 dark:bg-green-900/30 rounded-full">
+          <Truck className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 dark:text-green-400" />
+          <span className="text-xs sm:text-sm font-semibold text-green-700 dark:text-green-300">
             Швидка доставка по всій Україні
           </span>
         </div>
         
-        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white">
           Доставка та <span className="text-gradient">Оплата</span>
         </h1>
         
-        <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+        <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
           Зручні способи доставки та оплати для вашого комфорту
         </p>
       </motion.div>
 
       {/* Delivery Methods */}
-      <div className="space-y-6">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+      <div className="space-y-4 sm:space-y-6">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
           Способи доставки
         </h2>
         
