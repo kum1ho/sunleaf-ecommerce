@@ -6,15 +6,12 @@ import { useAuthStore } from '../store/authStore';
 import { useCartStore } from '../store/cartStore';
 import { useWishlistStore } from '../store/wishlistStore';
 import ThemeToggle from './ThemeToggle';
-import LanguageSwitcher from './LanguageSwitcher';
-import { useTranslation } from 'react-i18next';
 
 export default function Header() {
   const { user, logout } = useAuthStore();
   const items = useCartStore(state => state.items);
   const wishlistItems = useWishlistStore(state => state.items);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { t } = useTranslation();
 
   const cartItemsCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -43,35 +40,35 @@ export default function Header() {
               className="text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 font-semibold transition-colors flex items-center gap-2"
             >
               <Coffee className="w-5 h-5" />
-              {t('nav.catalog')}
+              Каталог
             </Link>
             <Link
               to="/promotions"
               className="text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 font-semibold transition-colors flex items-center gap-2"
             >
               <Sparkles className="w-5 h-5" />
-              {t('nav.promotions')}
+              Акції
             </Link>
             <Link
               to="/blog"
               className="text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 font-semibold transition-colors flex items-center gap-2"
             >
               <BookOpen className="w-5 h-5" />
-              {t('nav.blog')}
+              Блог
             </Link>
             <Link
               to="/delivery"
               className="text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 font-semibold transition-colors flex items-center gap-2"
             >
               <Truck className="w-5 h-5" />
-              {t('nav.delivery')}
+              Доставка
             </Link>
             {user && (
               <Link
                 to="/orders"
                 className="text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 font-semibold transition-colors"
               >
-                {t('nav.orders')}
+                Мої замовлення
               </Link>
             )}
             {user?.role === 'ADMIN' && (
@@ -79,14 +76,13 @@ export default function Header() {
                 to="/admin"
                 className="text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 font-semibold transition-colors"
               >
-                {t('nav.admin')}
+                Адмін панель
               </Link>
             )}
           </div>
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-4">
-            <LanguageSwitcher />
             <ThemeToggle />
 
             <Link to="/wishlist" className="relative">
@@ -144,7 +140,7 @@ export default function Header() {
                   className="flex items-center gap-2 px-4 py-2 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-xl font-semibold hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors"
                 >
                   <LogOut className="w-5 h-5" />
-                  {t('nav.logout')}
+                  Вийти
                 </motion.button>
               </div>
             ) : (
@@ -155,7 +151,7 @@ export default function Header() {
                   className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-xl font-bold shadow-lg hover:shadow-xl transition-all"
                 >
                   <User className="w-5 h-5" />
-                  {t('nav.login')}
+                  Увійти
                 </motion.button>
               </Link>
             )}
@@ -163,9 +159,6 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-1.5 sm:gap-2">
-            <div className="hidden xs:block">
-              <LanguageSwitcher />
-            </div>
             <ThemeToggle />
 
             <Link to="/wishlist" className="relative p-1.5 sm:p-2">
@@ -216,7 +209,7 @@ export default function Header() {
                   className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold transition-colors"
                 >
                   <Coffee className="w-5 h-5" />
-                  {t('nav.catalog')}
+                  Каталог
                 </Link>
                 
                 <Link
@@ -225,7 +218,7 @@ export default function Header() {
                   className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold transition-colors"
                 >
                   <Sparkles className="w-5 h-5" />
-                  {t('nav.promotions')}
+                  Акції
                 </Link>
                 
                 <Link
@@ -234,7 +227,7 @@ export default function Header() {
                   className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold transition-colors"
                 >
                   <BookOpen className="w-5 h-5" />
-                  {t('nav.blog')}
+                  Блог
                 </Link>
                 
                 <Link
@@ -243,7 +236,7 @@ export default function Header() {
                   className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold transition-colors"
                 >
                   <Truck className="w-5 h-5" />
-                  {t('nav.delivery')}
+                  Доставка
                 </Link>
                 
                 {user && (
@@ -252,7 +245,7 @@ export default function Header() {
                     onClick={() => setMobileMenuOpen(false)}
                     className="px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold transition-colors"
                   >
-                    {t('nav.orders')}
+                    Мої замовлення
                   </Link>
                 )}
                 
@@ -262,7 +255,7 @@ export default function Header() {
                     onClick={() => setMobileMenuOpen(false)}
                     className="px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold transition-colors"
                   >
-                    {t('nav.admin')}
+                    Адмін панель
                   </Link>
                 )}
 
@@ -283,7 +276,7 @@ export default function Header() {
                         className="w-full flex items-center gap-3 px-4 py-3 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-xl font-semibold"
                       >
                         <LogOut className="w-5 h-5" />
-                        {t('nav.logout')}
+                        Вийти
                       </button>
                     </>
                   ) : (
@@ -293,7 +286,7 @@ export default function Header() {
                       className="flex items-center justify-center gap-3 px-6 py-3 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-xl font-bold"
                     >
                       <User className="w-5 h-5" />
-                      {t('nav.login')}
+                      Увійти
                     </Link>
                   )}
                 </div>

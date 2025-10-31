@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Truck, Shield, Star, Gift, ArrowRight, Sparkles, Award, Users } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -18,7 +17,6 @@ const stagger = {
 };
 
 export default function HomePage() {
-  const { t } = useTranslation();
   
   return (
     <div className="space-y-20 -mt-6">
@@ -48,7 +46,7 @@ export default function HomePage() {
             className="text-5xl sm:text-6xl md:text-8xl font-bold mb-8 leading-tight"
           >
             <span className="bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 dark:from-amber-400 dark:via-orange-400 dark:to-red-400 bg-clip-text text-transparent">
-              {t('home.hero.title')}
+              Відкрий світ справжнього чаю
             </span>
           </motion.h1>
 
@@ -56,7 +54,7 @@ export default function HomePage() {
             variants={fadeInUp}
             className="text-lg sm:text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed"
           >
-            {t('home.hero.subtitle')}
+            Преміальні сорти чаю та кави з усього світу. Насолоджуйтеся неперевершеною якістю та смаком кожного ранку.
           </motion.p>
 
           <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -66,7 +64,7 @@ export default function HomePage() {
                 whileTap={{ scale: 0.95 }}
                 className="px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-amber-600 to-orange-600 dark:from-amber-500 dark:to-orange-500 text-white rounded-2xl font-bold text-base sm:text-lg shadow-2xl transition-all flex items-center justify-center gap-3 w-full sm:w-auto"
               >
-                {t('home.hero.cta')}
+                Переглянути каталог
                 <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
               </motion.button>
             </Link>
@@ -105,17 +103,15 @@ export default function HomePage() {
 
       {/* Categories */}
       <section className="max-w-7xl mx-auto px-4">
-        <motion.div
+        <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-gray-900 dark:text-white">{t('home.categories.title')}</h2>
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-gray-900 dark:text-white">Наші категорії</h2>
           <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400">Оберіть те, що вам до смаку</p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+        </motion.div>        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {[
             {
               name: 'Кава',
