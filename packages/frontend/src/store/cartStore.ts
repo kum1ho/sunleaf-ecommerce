@@ -3,65 +3,62 @@ import { persist } from 'zustand/middleware';
 
 export interface CartItem {
   id: string;
-  productId: string;
   name: string;
   price: number;
-  quantity: number;
   imageUrl: string;
+  quantity: number;
 }
 
-interface CartState {
+interface CartStore {
   items: CartItem[];
-  addItem: (product: Omit<CartItem, 'quantity'>, quantity?: number) => void;
-  removeItem: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  addToCart: (item: Omit<CartItem, 'quantity'>) => void;
+  removeFromCart: (id: string) => void;
+  updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
-  total: () => number;
+  total: number;
 }
 
-export const useCartStore = create<CartState>()(
+export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
       items: [],
-
-      addItem: (product, quantity = 1) => {
-        const items = get().items;
-        const existing = items.find(i => i.productId === product.productId);
-
-        if (existing) {
+      
+      get total() {
+        return get().items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      },
+      
+      addToCart: (item) => {
+        const existingItem = get().items.find(i => i.id === item.id);
+        if (existingItem) {
           set({
-            items: items.map(i =>
-              i.productId === product.productId
-                ? { ...i, quantity: i.quantity + quantity }
-                : i
+            items: get().items.map(i =>
+              i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
             )
           });
         } else {
-          set({ items: [...items, { ...product, quantity }] });
+          set({ items: [...get().items, { ...item, quantity: 1 }] });
         }
       },
-
-      removeItem: (productId) => {
-        set({ items: get().items.filter(i => i.productId !== productId) });
+      
+      removeFromCart: (id) => {
+        set({ items: get().items.filter(item => item.id !== id) });
       },
-
-      updateQuantity: (productId, quantity) => {
-        if (quantity <= 0) {
-          get().removeItem(productId);
-          return;
-        }
-
+      
+      updateQuantity: (id, quantity) => {
+        if (quantity < 1) return;
         set({
-          items: get().items.map(i =>
-            i.productId === productId ? { ...i, quantity } : i
+          items: get().items.map(item =>
+            item.id === id ? { ...item, quantity } : item
           )
         });
       },
-
-      clearCart: () => set({ items: [] }),
-
-      total: () => get().items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+      
+      clearCart: () => {
+        set({ items: [] });
+      }
     }),
-    { name: 'cart-storage' }
+    {
+      name: 'cart-storage'
+    }
   )
 );

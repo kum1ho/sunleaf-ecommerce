@@ -1,295 +1,234 @@
-import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, Tag, Truck } from 'lucide-react';
-import toast, { Toaster } from 'react-hot-toast';
-import { useState } from 'react';
+import { ShoppingBag, Trash2, Plus, Minus, ArrowRight, ShoppingCart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useCartStore } from '../store/cartStore';
-import { useAuthStore } from '../store/authStore';
 import PromoCodeInput from '../components/PromoCodeInput';
+import { useState } from 'react';
 
 export default function CartPage() {
-  const navigate = useNavigate();
-  const { items, updateQuantity, removeItem, total, clearCart } = useCartStore();
-  const user = useAuthStore(state => state.user);
+  const { items, updateQuantity, removeFromCart, total } = useCartStore();
   const [promoDiscount, setPromoDiscount] = useState(0);
   const [promoCode, setPromoCode] = useState('');
 
-  const handleCheckout = () => {
-    if (!user) {
-      navigate('/login?redirect=/checkout');
-    } else {
-      navigate('/checkout');
-    }
-  };
-
-  const handleRemove = (productId: string, name: string) => {
-    removeItem(productId);
-    toast.success(`${name} видалено з кошика`, {
-      icon: '🗑️',
-      position: 'top-right'
-    });
-  };
-
-  const deliveryCost = total() >= 500 ? 0 : 50;
-  const discount = total() >= 1000 ? total() * 0.1 : 0;
-  const finalTotal = total() + deliveryCost - discount - promoDiscount;
-
-  const handlePromoApplied = (discountAmount: number, code: string) => {
-    setPromoDiscount(discountAmount);
+  const handlePromoApplied = (discount: number, code: string) => {
+    setPromoDiscount(discount);
     setPromoCode(code);
   };
 
+  const finalTotal = Math.max(0, total - promoDiscount);
+
   if (items.length === 0) {
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center py-20"
-      >
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-primary-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4">
         <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.2, type: 'spring' }}
-          className="text-8xl mb-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center max-w-md"
         >
-          🛒
+          <div className="mb-6 relative">
+            <div className="w-32 h-32 mx-auto bg-gradient-to-br from-primary-100 to-accent-100 dark:from-primary-900/20 dark:to-accent-900/20 rounded-full flex items-center justify-center">
+              <ShoppingCart className="w-16 h-16 text-primary-600 dark:text-primary-400" />
+            </div>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+            Кошик порожній
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+            Додайте товари до кошика, щоб оформити замовлення
+          </p>
+          <Link to="/catalog">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="btn btn-primary inline-flex items-center gap-2 min-h-[48px]"
+            >
+              <ShoppingBag className="w-5 h-5" />
+              До каталогу
+            </motion.button>
+          </Link>
         </motion.div>
-        <h2 className="text-4xl font-bold mb-4">Кошик порожній</h2>
-        <p className="text-[var(--text-secondary)] text-lg mb-8">
-          Додайте товари до кошика, щоб продовжити покупки
-        </p>
-        <Link to="/catalog">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="btn btn-primary text-lg px-8 flex items-center gap-3 mx-auto"
-          >
-            <ShoppingBag className="w-6 h-6" />
-            Перейти до каталогу
-          </motion.button>
-        </Link>
-      </motion.div>
+      </div>
     );
   }
 
   return (
-    <div className="space-y-8">
-      <Toaster />
-      
-      {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2">Кошик</h1>
-          <p className="text-[var(--text-secondary)]">
-            {items.length} {items.length === 1 ? 'товар' : 'товарів'} на суму {total().toFixed(2)} ₴
-          </p>
-        </div>
-        
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => {
-            clearCart();
-            toast.success('Кошик очищено');
-          }}
-          className="text-red-600 hover:text-red-800 font-semibold flex items-center gap-2"
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8 sm:py-12">
+      <div className="container mx-auto px-4 max-w-7xl">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
         >
-          <Trash2 className="w-5 h-5" />
-          Очистити кошик
-        </motion.button>
-      </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-gray-900 dark:text-white">
+            🛒 Кошик
+          </h1>
+          <p className="text-lg text-gray-600 dark:text-gray-300">
+            {items.length} {items.length === 1 ? 'товар' : items.length < 5 ? 'товари' : 'товарів'}
+          </p>
+        </motion.div>
 
-      <div className="grid lg:grid-cols-3 gap-8">
-        {/* Cart Items */}
-        <div className="lg:col-span-2 space-y-4">
-          <AnimatePresence mode="popLayout">
-            {items.map(item => (
-              <motion.div
-                key={item.productId}
-                layout
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20, transition: { duration: 0.2 } }}
-                className="card flex flex-col sm:flex-row gap-6 group"
-              >
-                <Link to={`/product/${item.productId}`}>
-                  <div className="w-full sm:w-32 aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
-                    <img
-                      src={item.imageUrl}
-                      alt={item.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </div>
-                </Link>
-
-                <div className="flex-1 flex flex-col justify-between">
-                  <div>
-                    <Link to={`/product/${item.productId}`}>
-                      <h3 className="font-bold text-lg sm:text-xl mb-2 hover:text-primary-600 transition">
-                        {item.name}
-                      </h3>
-                    </Link>
-                    <p className="text-xl sm:text-2xl font-bold text-primary-600 dark:text-primary-400">
-                      {item.price.toFixed(2)} ₴
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-between mt-4">
-                    {/* Quantity Controls */}
-                    <div className="flex items-center gap-3">
-                      <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                        className="w-10 h-10 rounded-lg bg-[var(--bg-secondary)] hover:bg-primary-100 dark:hover:bg-primary-900/30 flex items-center justify-center"
-                      >
-                        <Minus className="w-5 h-5" />
-                      </motion.button>
-                      
-                      <span className="w-12 text-center text-xl font-bold">
-                        {item.quantity}
-                      </span>
-                      
-                      <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                        className="w-10 h-10 rounded-lg bg-[var(--bg-secondary)] hover:bg-primary-100 dark:hover:bg-primary-900/30 flex items-center justify-center"
-                      >
-                        <Plus className="w-5 h-5" />
-                      </motion.button>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Cart Items */}
+          <div className="lg:col-span-2 space-y-4">
+            <AnimatePresence mode="popLayout">
+              {items.map((item) => (
+                <motion.div
+                  key={item.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9, x: -100 }}
+                  className="card"
+                >
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    {/* Product Image */}
+                    <div className="flex-shrink-0 w-full sm:w-32 h-48 sm:h-32">
+                      <img
+                        src={item.imageUrl}
+                        alt={item.name}
+                        className="w-full h-full object-cover rounded-xl"
+                      />
                     </div>
 
-                    {/* Remove Button */}
-                    <div className="flex items-center gap-2 sm:gap-4">
-                      <p className="text-lg sm:text-xl md:text-2xl font-bold">
-                        {(item.price * item.quantity).toFixed(2)} ₴
-                      </p>
-                      <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={() => handleRemove(item.productId, item.name)}
-                        className="text-red-600 hover:text-red-800 p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
-                      >
-                        <Trash2 className="w-5 h-5" />
-                      </motion.button>
+                    {/* Product Info */}
+                    <div className="flex-grow min-w-0">
+                      <div className="flex flex-col sm:flex-row justify-between gap-3 mb-4">
+                        <div className="min-w-0 flex-grow">
+                          <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 break-words">
+                            {item.name}
+                          </h3>
+                          <p className="text-lg font-semibold text-primary-600 dark:text-primary-400">
+                            {item.price.toFixed(2)} ₴
+                          </p>
+                        </div>
+                        
+                        <motion.button
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                          onClick={() => removeFromCart(item.id)}
+                          className="self-start p-2 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+                          aria-label="Видалити з кошика"
+                        >
+                          <Trash2 className="w-5 h-5" />
+                        </motion.button>
+                      </div>
+
+                      {/* Quantity Controls */}
+                      <div className="flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                          <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                            className="w-11 h-11 flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                            aria-label="Зменшити кількість"
+                          >
+                            <Minus className="w-5 h-5" />
+                          </motion.button>
+                          
+                          <span className="w-14 text-center text-lg font-semibold text-gray-900 dark:text-white">
+                            {item.quantity}
+                          </span>
+                          
+                          <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            className="w-11 h-11 flex items-center justify-center bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg hover:bg-primary-200 dark:hover:bg-primary-900/50 transition-colors"
+                            aria-label="Збільшити кількість"
+                          >
+                            <Plus className="w-5 h-5" />
+                          </motion.button>
+                        </div>
+
+                        <div className="text-right">
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Сума</p>
+                          <p className="text-xl font-bold text-gray-900 dark:text-white">
+                            {(item.price * item.quantity).toFixed(2)} ₴
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
 
-        {/* Order Summary */}
-        <div className="space-y-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="card sticky top-6"
-          >
-            <h2 className="text-2xl font-bold mb-6">Підсумок замовлення</h2>
-
-            <div className="space-y-4 mb-6">
-              <div className="flex justify-between text-lg">
-                <span>Товари ({items.length}):</span>
-                <span className="font-semibold">{total().toFixed(2)} ₴</span>
-              </div>
-
-              <div className="flex justify-between text-lg">
-                <span className="flex items-center gap-2">
-                  <Truck className="w-5 h-5" />
-                  Доставка:
-                </span>
-                <span className={`font-semibold ${deliveryCost === 0 ? 'text-green-600' : ''}`}>
-                  {deliveryCost === 0 ? 'Безкоштовно' : `${deliveryCost} ₴`}
-                </span>
-              </div>
-
-              {discount > 0 && (
-                <div className="flex justify-between text-lg text-green-600">
-                  <span className="flex items-center gap-2">
-                    <Tag className="w-5 h-5" />
-                    Знижка (10%):
-                  </span>
-                  <span className="font-semibold">-{discount.toFixed(2)} ₴</span>
-                </div>
-              )}
-
-              {promoDiscount > 0 && (
-                <div className="flex justify-between text-lg text-purple-600 dark:text-purple-400">
-                  <span className="flex items-center gap-2">
-                    <Tag className="w-5 h-5" />
-                    Промокод {promoCode}:
-                  </span>
-                  <span className="font-semibold">-{promoDiscount.toFixed(2)} ₴</span>
-                </div>
-              )}
-
-              <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                <div className="flex justify-between items-center">
-                  <span className="text-2xl font-bold">Разом:</span>
-                  <span className="text-4xl font-bold text-primary-600 dark:text-primary-400">
-                    {finalTotal.toFixed(2)} ₴
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {total() < 500 && (
-              <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 mb-6">
-                <p className="text-sm text-amber-800 dark:text-amber-200">
-                  💡 Додайте ще {(500 - total()).toFixed(2)} ₴ для безкоштовної доставки!
-                </p>
-              </div>
-            )}
-
-            {/* Promo Code Input */}
-            <div className="mb-6">
-              <PromoCodeInput 
-                totalAmount={total()} 
-                onPromoApplied={handlePromoApplied}
-              />
-            </div>
-
-            {total() >= 500 && total() < 1000 && (
-              <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 mb-6">
-                <p className="text-sm text-green-800 dark:text-green-200">
-                  🎉 Безкоштовна доставка активована!
-                </p>
-              </div>
-            )}
-
-            {total() >= 1000 && (
-              <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4 mb-6">
-                <p className="text-sm text-purple-800 dark:text-purple-200">
-                  ⭐ Ви отримали знижку 10%!
-                </p>
-              </div>
-            )}
-
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={handleCheckout}
-              className="btn btn-primary w-full text-lg py-4 flex items-center justify-center gap-3"
+          {/* Order Summary */}
+          <div className="lg:col-span-1">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="card sticky top-24"
             >
-              Оформити замовлення
-              <ArrowRight className="w-6 h-6" />
-            </motion.button>
+              <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
+                Підсумок замовлення
+              </h2>
 
-            <Link to="/catalog">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="btn btn-secondary w-full mt-3 flex items-center justify-center gap-2"
-              >
-                <ShoppingBag className="w-5 h-5" />
-                Продовжити покупки
-              </motion.button>
-            </Link>
-          </motion.div>
+              <div className="space-y-4 mb-6">
+                <div className="flex justify-between text-lg">
+                  <span className="text-gray-600 dark:text-gray-300">Товарів:</span>
+                  <span className="font-semibold text-gray-900 dark:text-white">{items.length}</span>
+                </div>
+                <div className="flex justify-between text-lg">
+                  <span className="text-gray-600 dark:text-gray-300">Сума:</span>
+                  <span className="font-semibold text-gray-900 dark:text-white">{total.toFixed(2)} ₴</span>
+                </div>
+                
+                {promoDiscount > 0 && (
+                  <div className="flex justify-between text-lg">
+                    <span className="text-gray-600 dark:text-gray-300">Знижка ({promoCode}):</span>
+                    <span className="font-semibold text-green-600 dark:text-green-400">-{promoDiscount.toFixed(2)} ₴</span>
+                  </div>
+                )}
+
+                <div className="flex justify-between text-lg">
+                  <span className="text-gray-600 dark:text-gray-300">Доставка:</span>
+                  <span className="font-semibold text-green-600 dark:text-green-400">Безкоштовно</span>
+                </div>
+                
+                <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
+                  <div className="flex justify-between text-2xl">
+                    <span className="font-bold text-gray-900 dark:text-white">Всього:</span>
+                    <span className="font-bold text-primary-600 dark:text-primary-400">
+                      {finalTotal.toFixed(2)} ₴
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Promo Code */}
+              <div className="mb-6">
+                <PromoCodeInput 
+                  totalAmount={total} 
+                  onPromoApplied={handlePromoApplied}
+                />
+              </div>
+
+              <Link to="/checkout">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="btn btn-primary w-full flex items-center justify-center gap-2 min-h-[52px] text-lg"
+                >
+                  Оформити замовлення
+                  <ArrowRight className="w-5 h-5" />
+                </motion.button>
+              </Link>
+
+              <Link to="/catalog">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="btn btn-secondary w-full mt-4 flex items-center justify-center gap-2 min-h-[48px]"
+                >
+                  <ShoppingBag className="w-5 h-5" />
+                  Продовжити покупки
+                </motion.button>
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </div>
     </div>

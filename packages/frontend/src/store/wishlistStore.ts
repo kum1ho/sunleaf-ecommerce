@@ -1,18 +1,21 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface WishlistItem {
+export interface WishlistItem {
   id: string;
   name: string;
+  description: string;
   price: number;
   imageUrl: string;
   category: string;
+  stock?: number;
 }
 
 interface WishlistStore {
   items: WishlistItem[];
   addItem: (item: WishlistItem) => void;
   removeItem: (id: string) => void;
+  removeFromWishlist: (id: string) => void;
   isInWishlist: (id: string) => boolean;
   clearWishlist: () => void;
 }
@@ -30,6 +33,10 @@ export const useWishlistStore = create<WishlistStore>()(
       },
       
       removeItem: (id) => {
+        set({ items: get().items.filter(item => item.id !== id) });
+      },
+      
+      removeFromWishlist: (id) => {
         set({ items: get().items.filter(item => item.id !== id) });
       },
       
